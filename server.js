@@ -1,33 +1,26 @@
-var WSS = require('ws').Server;
 
-// Start the server
-var wss = new WSS({ port: 8081 });
+//
+// Websocket Server
+//
 
-// When a connection is established
-wss.on('connection', function(socket) {
+const WSS = require('ws').Server;
+const wss = new WSS({ port: 8081 });
 
-  // Send data back to the client
+wss.on('connection', (socket) => {
+
   socket.send("server_handshake");
   console.log('Sent handshake to client.');
 
-  // When data is received
-  socket.on('message', function(message) {
+  socket.on('message', (message) => {
     console.log('Received: ' + message);
   });
 
-  // The connection was closed
-  socket.on('close', function() {
+  socket.on('close', () => {
     console.log('Closed Connection ');
   });
 
 });
 
-
-function broadcastFileChange() {
-  wss.clients.forEach(function each(client) {
-    client.send('static_files_changed');
-  });
-}
 
 //
 // Watch File Event
@@ -35,11 +28,15 @@ function broadcastFileChange() {
 
 const chokidar = require('chokidar');
 
-// One-liner for current directory, ignores .dotfiles
 chokidar.watch('static', {ignored: /(^|[\/\\])\../}).on('all', (event, path) => {
   broadcastFileChange()
 });
 
+function broadcastFileChange() {
+  wss.clients.forEach((client) => {
+    client.send('static_files_changed');
+  });
+}
 
 
 //
@@ -50,6 +47,6 @@ const express = require('express')
 const app = express()
 
 app.use(express.static('static'))
-app.listen(3000, function () {
+app.listen(3000, () => {
     console.log('Example app listening on port 3000!')
 })

@@ -5,8 +5,7 @@
     * {
         margin: 0;
         padding: 0;
-        position: absolute;
-        font-family: "Roboto"
+        font-family: "Roboto";
     }
 
     button {
@@ -20,24 +19,43 @@
         font-weight: normal;
     }
 
+    .absolute {
+        position: absolute;
+    }
+    .draggable {
+        position: absolute;
+        cursor: move;
+    }
+
 </style>
 
-<button style="top: 100px; left: 50vw;" onclick="click()">
-    Don't click this button
-</button>
+<div class="draggable" style="top: 100px; left: 200px;">
+    <button>
+        Don't click this button
+    </button>
+</div>
 
-<p id="text" style="top: 45px; left: 32px;">
-    Welcome to another weird web experiment.
-</p>
+<div id="movebox" contenteditable="true" class="draggable"
+     style="width: 200px; border: 1px dashed black; background: black; color: white; top: 503px; left: 548px;">
+    Welcome to another weird web experiment. <br>
+    Welcome to another weird web experiment. <br>
+    Welcome to another weird web experiment. <br>
+    Welcome to another weird web experiment. <br>
+    Welcome to another weird web experiment. <br>
+    Welcome to another weird web experiment. <br>
+    Welcome to another weird web experiment. <br>
+</div>
 
-<h3>Where am I?</h3>
+<h3 class="draggable">Where am I?</h3>
 
-<div style="top: 0px;
+<div class="absolute" style="top: 0px;
             left: 50vw; 
-            height: 100vh; 
+            height: 100vh;
+            border: none; 
             border-left: 1px solid #FF00FF;"></div>
 
-<div style="top: 50vh;
+<div class="absolute" style="top: 50vh;
             left: 0px;
-            width: 100vw; 
+            width: 100vw;
+            border: none; 
             border-top: 1px solid #FF00FF;"></div>
