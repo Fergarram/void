@@ -1,0 +1,19 @@
+{
+  "name": "void",
+  "version": "0.0.0",
+  "description": "",
+  "repository": "https://github.com/Fergarram/void.git",
+  "main": "server.js",
+  "dependencies": {
+    "chokidar": "^2.1.5",
+    "express": "^4.16.4",
+    "ws": "^6.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js index.html"
+  },
+  "author": "F",
+  "license": "ISC"
+}
