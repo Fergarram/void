@@ -3,15 +3,20 @@ var socket = new WebSocket('ws://localhost:8081/')
 // When a connection is made
 socket.onopen = function() {
   socket.send("client_handshake")
-  console.log('Sent client handshake.')
+  // console.log('Sent client handshake.')
 }
+
+getStaticFilesUpdate()
 
 async function getStaticFilesUpdate() {
   try {
     const response = await axios.get(`${location.href}/canvas.html`)
     document.body.innerHTML = response.data
     loadScript(`${location.href}/painter.js`, function() {
-       console.log("reloaded painter.js")
+       // console.log("reloaded painter.js")
+    })
+    loadScript(`${location.href}/logic.js`, function() {
+       // console.log("reloaded painter.js")
     })
 
   } catch (error) {
@@ -28,19 +33,19 @@ socket.onmessage = function(event) {
 
     case "server_handshake":
       getStaticFilesUpdate() // Will only get executed once on first load.
-      console.log("Received handshake from server.")
+      // console.log("Received handshake from server.")
       break
   }
 }
 
 // A connection could not be made
 socket.onerror = function(event) {
-  console.log(event)
+  // console.log(event)
 }
 
 // A connection was closed
 socket.onclose = function(code, reason) {
-  console.log(code, reason)
+  // console.log(code, reason)
 }
 
 // Close the connection when the window is closed

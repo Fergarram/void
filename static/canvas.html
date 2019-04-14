@@ -2,100 +2,152 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
 
+<div id= "bottom" style="width: 100vw; height: 100vh;"></div>
+
 <style type="text/css">
-    * {
-        margin: 0;
-        padding: 0;
-        font-family: "Roboto";
-    }
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto Mono";
+    cursor: auto;
+    box-sizing: border-box;
+    outline: none;
+}
 
-    body {
-        background: #E7EAED;
-    }
+body {
+    overflow: hidden;
+    background: #fbfbfb;
+    background: #e2e7e8; 
+    /*background: #2a53af;*/
+    background-size: 20px 20px;
+    background-image: linear-gradient(to right, #d5d8dc 1px, transparent 1px), linear-gradient(to bottom, #d5d8dc 1px, transparent 1px)
+    /*background-image: linear-gradient(to right, #496bb9 1px, transparent 1px), linear-gradient(to bottom, #496bb9 1px, transparent 1px)*/
+}
 
-    button {
-        margin: 1px;
-        padding: 2px 8px 2px 8px;
-        width: max-content;
-    }
+h1, h2, h3, h4, h5, h6, p, span  {
+    font-weight: normal;
+}
 
-    h1, h2, h3, h4, h5, h6, p, span  {
-        width: max-content;
-        font-weight: normal;
-    }
+.absolute {
+    position: absolute;
+}
+.draggable {
+    cursor: grab;
+    position: absolute;
+    padding: 16px;
+}
 
-    .absolute {
-        position: absolute;
-    }
-    .draggable {
-        position: absolute;
-        cursor: grab;
-    }
+.card {
+  background: white;
+  color: black;
+  width: 420px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
+              0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  border: 1px dashed rgb(214, 214, 214);
+  border: 1px dashed #a0a0a0;
 
-    .card {
-      background: white;
-      color: black;
-      border-radius: 2px;
-    }
+} .card:hover {
+    cursor: grab; 
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+                0 10px 10px rgba(0,0,0,0.22);
+} .card button {
+    text-transform: uppercase;
+    /*letter-spacing: 1px;*/
+    margin: 1px;
+    font-size: 13px;
+    padding: 6px 24px 6px 24px;
+    width: max-content;
+    cursor: pointer;
+    background: #3e3e3e;
+    color: white;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
+                0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    border: none;
+    position: relative;
+    user-select: none;
+ 
+} .card button:active {
+    transition: all 1s cubic-bezier(.25,.8,.25,1);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+                0 10px 10px rgba(0,0,0,0.22);
+    top: 1px;
+    background: #D0D0D0;
+    color: #B0B0B0;
+} .card input[type=text] {
+    width: 284px;
+    position: relative;
+    border-radius: 2px;
+    cursor: auto;
+    border: none;
+    padding: 6px 6px 6px 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
+                0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 
-    .card-1 {
-      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-      transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-    }
-    .card-1:hover { box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); }
+} .card input[type=text]:active {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+                0 10px 10px rgba(0,0,0,0.22);
+    top: 1px;
+}
 
-    .card-2 { box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); }
-    .card-3 { box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); }
-    .card-4 { box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); }
-    .card-5 { box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); }
-
+#card-contents {
+    padding: 8px;
+    cursor: grab;
+}
 </style>
 
-<div class="draggable" style="top: 100px; left: 200px;">
-    <button>
-        Don't click this button. Never!
-    </button>
+<canvas id="myCanvas" resize></canvas>
+
+<div id="card-drag-handle" 
+     class="draggable" 
+     style="left: 0px; top: 0px; 
+            opacity: 0;
+            transition: opacity 1s cubic-bezier(.25,.8,.25,1)">
+
+    <div id="the-card" class="card" 
+         style="font-family: 'Roboto Mono'; 
+         padding: 16px;">
+        <div id="card-contents">
+            <h4 style="margin-bottom: 16px; 
+                       user-select: none;
+                       text-align: center;
+                       cursor: grab;">
+                Name your new thing
+            </h4>
+            <div style="display: flex; width: fit-content;">
+                <input id="the-card-textinput"
+                       type="text"
+                       style="margin-right: 8px;" 
+                       name="search-box" 
+                       placeholder="Type me a name for it">
+                <button id="the-cards-button">Save</button>
+            </div>
+            <!-- <button>안녕</button> -->
+        </div>
+    </div>
+
 </div>
 
-<div id="movebox" class="draggable" style="top: 503px; left: 548px;">
-    <div class="card card-1" style="font-family: 'Roboto Mono'; padding: 16px;">
-        Welcome to another weird web experiment. <br>
-        Welcome to another weird web experiment. <br>
-        Welcome to another weird web experiment. <br>
-        Welcome to&nbsp; drag me around &nbsp; experiment. <br>
-        Welcome to another weird web experiment. <br>
-        Welcome to another weird web experiment. <br>
-        Welcome to another weird web experiment. <br>
-    </div>
-</div>
-<div id="movebox" class="draggable" style="top: 103px; left: 548px;">
-    <div class="card card-1" style="font-family: 'Roboto Mono'; padding: 16px;">
-        Welcome to another weird web experiment. <br>
-        Welcome to another weird web experiment. <br>
-        Welcome to another weird web experiment. <br>
-        Welcome to&nbsp; drag me around &nbsp; experiment. <br>
-        Welcome to another weird web experiment. <br>
-        Welcome to another weird web experiment. <br>
-        Welcome to another weird web experiment. <br>
-    </div>
-</div>
-<div id="movebox" class="draggable" style="top: 203px; left: 548px;">
-    <div class="card card-1" style="font-family: 'Roboto Mono'; padding: 16px;">
-        Welcome to another weird web experiment. <br>
-        Welcome to another weird web experiment. <br>
-        Welcome to another weird web experiment. <br>
-        Welcome to&nbsp; drag me around &nbsp; experiment. <br>
-        Welcome to another weird web experiment. <br>
-        Welcome to another weird web experiment. <br>
-        Welcome to another weird web experiment. <br>
-    </div>
-</div>
+<!-- <div id="circle" 
+     class="draggable" 
+     style="left: 0px; top: 0px; border-radius: 60px;">
 
-<div class="draggable">
-    <h3>Where am I?</h3>
-</div>
-<!-- 
-<div class="absolute" style="top: 0px;
+     <div class="card" 
+          style="width: 128px; height: 128px;
+                 border: 8px solid white;
+                 border-radius: 50px;
+                 background: url('goat.jpg');
+                 background-size: cover;">
+     </div>
+
+</div> -->
+
+
+<!-- <div class="absolute" style="top: 0px;
             left: 50vw; 
             height: 100vh;
             border: none; 
@@ -105,5 +157,5 @@
             left: 0px;
             width: 100vw;
             border: none; 
-            border-top: 1px solid #FF00FF;"></div>
- -->
+            border-top: 1px solid #FF00FF;"></div> -->
+
