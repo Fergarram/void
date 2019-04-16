@@ -112,8 +112,8 @@ function dragElement(element) {
                 pos2 = pos4 - e.clientY
                 pos3 = e.clientX
                 pos4 = e.clientY
-                element.style.top = (element.offsetTop - pos2) + "px"
-                element.style.left = (element.offsetLeft - pos1) + "px"
+                let rect = element.getBoundingClientRect()
+                element.style.transform = `translate3d(${(rect.left - pos1)}px, ${(rect.top - pos2)}px, 0)`
                 IS_DRAGGING = true
                 setPointerEventsFor(element, "none")
             }
@@ -152,9 +152,8 @@ document.getElementById("bottom").onmousemove = (e) => {
 document.getElementById("bottom").onmousedown = (e) => {
     document.getElementById("bottom").style.userSelect = "none"
     document.getElementById("the-card-textinput")
-        .style
-            .boxShadow = `0 1px 3px rgba(0,0,0,0.12), 
-                          0 1px 2px rgba(0,0,0,0.24)`;
+        .style.boxShadow = `0 1px 3px rgba(0,0,0,0.12), 
+                            0 1px 2px rgba(0,0,0,0.24)`;
 }
 document.getElementById("bottom").onmouseup = (e) => {
     document.getElementById("bottom").style.userSelect = "initial"
@@ -162,10 +161,11 @@ document.getElementById("bottom").onmouseup = (e) => {
 
 
 function appearInCenter(eid) {
-    var element = document.getElementById(eid)
+    let element = document.getElementById(eid)
+    let left = `${(window.innerWidth/2) - (element.clientWidth/2)}px`
+    let top = `${(window.innerHeight/2) - (element.clientHeight/2)}px`
+    element.style.transform = `translate3d(${left}, ${top}, 0)`
     element.style.opacity = 1
-    element.style.left = `${(window.innerWidth/2) - (element.clientWidth/2)}px`
-    element.style.top = `${(window.innerHeight/2) - (element.clientHeight/2)}px`
 }
 
 
